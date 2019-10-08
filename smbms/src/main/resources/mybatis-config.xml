@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 配置mybatis的log实现为LOG4J -->
+		<setting name="logImpl" value="LOG4J" />
+		<!--
+			设置resultMap的自动映射级别为:
+			NONE
+			PARTIAL(partial)(默认)
+			FULL
+		-->
+		<setting name="autoMappingBehavior" value="FULL" />
+		<!-- <setting name="autoMappingBehavior" value="NONE" />  -->
+	</settings>
+	<!-- 配置别名 -->
+	<typeAliases>
+		<package name="com.lin.pojo" />
+	</typeAliases>
+</configuration>

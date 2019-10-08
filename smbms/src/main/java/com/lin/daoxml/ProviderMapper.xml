@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.dao.ProviderMapper">
+    <select id="findProviderByProName" resultType="com.lin.pojo.Provider" >
+        SELECT * FROM smbms_provider
+        <where>
+            <if test="proCode!=null and proCode!=''">
+              and proCode LIKE concat('%',#{proCode},'%')
+            </if>
+            <if test="proName!=null and proName!=''">
+              and proName LIKE concat('%',#{proName},'%')
+            </if>
+        </where>
+        order by id
+    </select>
+</mapper>

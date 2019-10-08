@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.dao.UserMapper">
+    <resultMap id="findUserResultMap" type="com.lin.pojo.User">
+        <id column="id" property="id"></id>
+        <result column="userCode" property="userCode"></result>
+        <result column="userName" property="userName"></result>
+        <result column="userPassword" property="userPassword"></result>
+        <result column="gender" property="gender"></result>
+        <result column="birthday" property="birthday"></result>
+
+        <association property="role" javaType="com.lin.pojo.Role">
+            <id column="roleId" property="id"></id>
+            <result column="roleCode" property="roleCode"></result>
+            <result column="roleName" property="roleName"></result>
+        </association>
+    </resultMap>
+    <select id="findUserByUserName" resultMap="findUserResultMap">
+           SELECT u.*,r.id roleId,r.roleName FROM smbms_role r
+        LEFT JOIN smbms_user u ON r.id=u.userRole
+             <where>
+                 <if test="userCode!=null and userCode!=''">
+                     and userCode like concat('%',#{userCode},'%')
+                 </if>
+                 <if test="userName!=null and userName!=''">
+                     and userName like concat('%',#{userName},'%')
+                 </if>
+                 <if test="gender!=null">
+                     and gender = #{gender}
+                 </if>
+                 <if test="userRole!=null">
+                     and userRole = #{userRole}
+                 </if>
+             </where>
+            ORDER BY u.creationDate desc
+    </select>
+    <insert id="addUser">
+        INSERT INTO smbms_user(userCode,userName,userPassword,gender,birthday,phone,address,userRole,createdBy,creationDate)
+        VALUES(#{userCode},#{userName},#{userPassword},#{gender},#{birthday},#{phone},#{address},#{userRole},#{createdBy},#{creationDate})
+    </insert>
+    <!-- 根据用户Id修改用户信息 -->
+    <update id="updateUser" parameterType="com.lin.pojo.User">
+        UPDATE
+        smbms_user
+        <set>
+            <if test="userName!=null and userName!=''">
+                userName = #{userName},
+            </if>
+            <if test="gender!=null">
+                gender = #{gender},
+            </if>
+            <if test="birthday!=null">
+                birthday = #{birthday},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test="address!=null and address!=''">
+                address = #{address},
+            </if>
+            <if test="userRole!=null">
+                userRole = #{userRole},
+            </if>
+            <if test="modifyBy!=null">
+                modifyBy = #{modifyBy},
+            </if>
+            <if test="modifyDate!=null">
+                modifyDate = #{modifyDate}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from smbms_user where id = #{id}
+    </delete>
+</mapper>
