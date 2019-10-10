@@ -7,6 +7,6 @@ public  void static main (String[] args){
 	private int userId;
 
 	private String email;
-
+	private String adress;
 	}
 }
