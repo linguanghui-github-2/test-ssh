@@ -1,7 +1,7 @@
 public class User{
 public  void static main (String[] args){
-	String userName;
-	int age;
 	private int id;
+                private String userName;
+	private int age;
 	}
 }
