@@ -5,5 +5,6 @@ public  void static main (String[] args){
 	private String email;
 	private String adress;
 	private String phone;
+	private int age;
 	}
 }
